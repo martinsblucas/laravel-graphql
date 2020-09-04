@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,12 +13,18 @@ abstract class BaseRepository
         $this->model = $model;
     }
 
-    public function show(int $id) : object
+    public function show(int $id, array $fields = ['*']) : object
     {
-        return $this->model->findOrFail($id);
+        return $this->model->where('id', '=', $id)->first($fields);
     }
 
-    public function store(array $data) : object {
+    public function store(array $data) : object
+    {
         return $this->model->create($data);
+    }
+
+    public function paginate(int $itemsPerPage = 10, array $fields = ['*'], string $pageName = 'page', int $currentPage = 1) : object
+    {
+        return $this->model->paginate($itemsPerPage, $fields, $pageName, $currentPage);
     }
 }

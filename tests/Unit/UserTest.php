@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserTest extends TestCase
 {
@@ -19,56 +19,54 @@ class UserTest extends TestCase
         $this->assertNotNull($response->getAttribute('email'));
     }
 
-    /**
-     * @return void
-     */
+    public function testWhereIdFirst()
+    {
+        $response = User::where('id', '=', 1)->first(['name', 'email']);
+        $this->assertNotNull($response->getAttribute('email'));
+    }
+
     public function testAll()
     {
         $User = new User();
         $this->assertIsObject($User->all());
     }
 
-    /**
-     * @return void
-     */
+    public function testPaginate()
+    {
+        $User = new User();
+        $response = $User->paginate(10, ['*'], 'page', 5);
+        $this->assertIsObject($response);
+    }
+
     public function testCreate()
     {
         $User = new User();
         $created = $User->create([
             'name' => $this->faker->name(true),
             'email' => $this->faker->email,
-            'password' => Hash::make($this->faker->password)
+            'password' => $this->faker->password
         ]);
 
         $this->assertIsInt($created->id);
     }
 
-    /**
-     * @return void
-     */
     public function testDestroy()
     {
         $User = new User();
         $created = $User->create([
             'name' => $this->faker->name(true),
             'email' => $this->faker->email,
-            'password' => Hash::make($this->faker->password)
+            'password' => $this->faker->password
         ]);
 
         $this->assertIsInt($User->destroy($created->id));
     }
 
-    /**
-     * @return void
-     */
     public function testOnlyTrashed()
     {
         $this->assertIsObject(User::onlyTrashed());
     }
 
-    /**
-     * @return void
-     */
     public function testAuthTrue()
     {
         $this->assertTrue(
@@ -79,9 +77,6 @@ class UserTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
     public function testAuthFalse()
     {
         $this->assertFalse(

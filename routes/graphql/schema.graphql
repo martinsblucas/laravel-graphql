@@ -5,17 +5,23 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
-    user(id: ID @eq): User!
+    user(id: ID @eq): User! @checkUser(userLevel: "vasco")
+    users(first: Int!, page: Int!) : UserPaginator
 }
 
 type Mutation {
-    createUser(input: UserInput) : User
+    userStore(input: UserInput!) : User
 }
 
 input UserInput {
     name: String!
     email: String!
     password: String!
+}
+
+type UserPaginator {
+    data: [User!]!
+    paginatorInfo: PaginatorInfo!
 }
 
 type User {
