@@ -5,8 +5,8 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
-    user(id: ID @eq): User! @checkUser(userLevel: "vasco")
-    users(first: Int!, page: Int!) : UserPaginator
+    user(id: ID @eq): User! @can(ability: "view", find: "id")
+    users(first: Int!, page: Int!) : UserPaginator @guard
 }
 
 type Mutation {
@@ -28,6 +28,7 @@ type User {
     id: ID!
     name: String!
     email: String!
+    api_token: String!
     created_at: DateTime!
     updated_at: DateTime!
 }

@@ -38,4 +38,13 @@ class UserRepositoryTest extends TestCase
 
         $this->assertIsObject($UserRepository->paginate());
     }
+
+    public function testLogin()
+    {
+        $UserRepository = new UserRepository(new User());
+
+        $auth = $UserRepository->auth("lucasmartins.av@gmail.com","TestSeeder");
+
+        $this->assertNotNull($auth);
+    }
 }

@@ -41,7 +41,10 @@ return [
     |
     */
     'route' => [
-        'prefix' => ''
+        'prefix' => '',
+        'middleware' => [
+            \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class,
+        ],
     ],
 
     /*
@@ -186,4 +189,6 @@ return [
     |
      */
     'batched_queries' => true,
+
+    'guard' => 'api',
 ];
