@@ -15,7 +15,8 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "mll-lab/laravel-graphql-playground": "^2.3",
-        "nuwave/lighthouse": "^4.16"
+        "nuwave/lighthouse": "^4.16",
+        "spatie/laravel-permission": "^3.16"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -3,13 +3,14 @@
 
 namespace App\Services;
 
+use App\Interfaces\BaseInterface;
 use App\Repositories\BaseRepository;
 
 abstract class BaseService
 {
     protected $repository;
 
-    public function __construct(BaseRepository $repository)
+    public function __construct(BaseInterface $repository)
     {
         $this->repository = $repository;
     }

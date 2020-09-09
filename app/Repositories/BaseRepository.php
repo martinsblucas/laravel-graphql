@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\BaseInterface;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseRepository
+abstract class BaseRepository implements BaseInterface
 {
     protected $model;
 

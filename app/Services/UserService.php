@@ -3,11 +3,11 @@
 
 namespace App\Services;
 
-use App\Repositories\UserRepository;
+use App\Interfaces\UserInterface;
 
 class UserService extends BaseService
 {
-    public function __construct(UserRepository $repository)
+    public function __construct(UserInterface $repository)
     {
         parent::__construct($repository);
     }
