@@ -7,7 +7,7 @@ interface RoleInterface extends BaseInterface
 {
     public function findByName(string $name) : object;
 
-    public function givenPermissionTo(PermissionInterface $permission) : object;
+    public function givePermissionTo(PermissionInterface $permission) : object;
 
     public function revokePermissionTo(PermissionInterface $permission) : object;
 
