@@ -51,6 +51,8 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at'];
 
+    protected $guard_name = 'api';
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

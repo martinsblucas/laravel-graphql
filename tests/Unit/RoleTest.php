@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Models\Permission;
@@ -23,18 +24,29 @@ class RoleTest extends TestCase
         $this->assertIsInt($role->id);
     }
 
-    public function testFindByName() {
+    public function testFindByName()
+    {
         $superAdminRole = Role::findByName('super-admin', 'api');
         $this->assertNotNull($superAdminRole->getAttribute('name'));
     }
 
-    public function testGivePermissionTo() {
+    public function testGivePermissionTo()
+    {
         $superAdminRole = Role::findByName('super-admin', 'api');
         $permissionGiven = $superAdminRole->givePermissionTo(['view users']);
         $this->assertIsInt($permissionGiven->getAttribute('id'));
     }
 
-    public function testRevokePermissionTo() {
+    public function testAssignRoleToUser()
+    {
+        $superAdminRole = Role::findByName('super-admin', 'api');
+        $user = User::findOrFail(1);
+        $assignRole = $user->assignRole($superAdminRole->getAttribute('name'));
+        $this->assertIsInt($assignRole->getAttribute('id'));
+    }
+
+    public function testRevokePermissionTo()
+    {
         $roleName = $this->faker->userName;
         $permissionName = $this->faker->userName;
 
